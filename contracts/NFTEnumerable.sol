@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
  * @notice This contract is NOT FOR PRODUCTION, just for learning purposes
  * @dev implements ERC721
  */
-contract ERC721Merkle is ERC721Enumerable {
+contract NFTEnumerable is ERC721Enumerable {
     /* State Variables */
     uint256 public tokenSupply = 1;
     uint256 public constant MAX_SUPPLY = 21;
