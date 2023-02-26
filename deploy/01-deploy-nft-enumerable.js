@@ -27,7 +27,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
 	log('-----------------------------------------');
 
 	let addressMap = require('../shared-data.js');
-	addressMap.nftEnumerableContractAddress = nftEnumerable.address;
+	addressMap.nftEnumerableAddress = nftEnumerable.address;
 };
 
 module.exports.tags = ['all', 'nftEnumerable'];
