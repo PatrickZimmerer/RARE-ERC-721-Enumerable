@@ -36,10 +36,9 @@ contract NFTEnumerable is ERC721Enumerable {
         require(_tokenSupply < MAX_SUPPLY, "Max Supply reached.");
         require(msg.value == PRICE, "Not enough ETH sent.");
         unchecked {
-            _tokenSupply++; // added unchecked block since overflow check gets handled by require MAX_SUPPLY
+            tokenSupply = _tokenSupply + 1; // added unchecked block since overflow check gets handled by require MAX_SUPPLY
         }
-        tokenSupply = _tokenSupply;
-        _safeMint(_to, _tokenSupply - 1);
+        _safeMint(_to, _tokenSupply);
     }
 
     /* View / Pure functions */
