@@ -66,7 +66,7 @@ contract SearchForPrimes is Ownable {
         if (_number <= 1) {
             return false;
         }
-        for (uint256 i = 2; i <= Math.sqrt(_number); i++) {
+        for (uint256 i = 3; i <= Math.sqrt(_number); i = i + 2) {
             if (_number % i == 0) {
                 return false;
             }
