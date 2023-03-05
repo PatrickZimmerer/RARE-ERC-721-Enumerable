@@ -31,7 +31,7 @@ contract SearchForPrimes is Ownable {
      * @notice gets the total amount of tokens first and then loops for amountOfTokens times
      * @notice we could also push the tokenIds into an array to have a list of which tokenIds are the primes
      */
-    function searchForPrimes(address _owner) external view returns (uint256) {
+    function getAmountOfPrimes(address _owner) external view returns (uint256) {
         uint256 amountOfTokens = contractToSearch.balanceOf(_owner);
         uint256 amountOfPrimes;
         for (uint256 i = 0; i < amountOfTokens; i++) {
@@ -66,7 +66,7 @@ contract SearchForPrimes is Ownable {
         if (_number <= 1) {
             return false;
         }
-        for (uint256 i = 3; i <= Math.sqrt(_number); i = i + 2) {
+        for (uint256 i = 2; i <= Math.sqrt(_number); i++) {
             if (_number % i == 0) {
                 return false;
             }
