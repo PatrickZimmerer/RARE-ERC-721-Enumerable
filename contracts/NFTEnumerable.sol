@@ -40,11 +40,6 @@ contract NFTEnumerable is ERC721Enumerable {
         _safeMint(_to, _tokenSupply);
     }
 
-    /* View / Pure functions */
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://QmeabjnV1H8ZhoztgTHAyQhNfJfQuo8yCvLimEaJfwFPo2/";
-    }
-
     function viewBalance() external view returns (uint256) {
         return address(this).balance;
     }
@@ -55,5 +50,10 @@ contract NFTEnumerable is ERC721Enumerable {
             "Only the deployer is allowed to do that"
         );
         payable(deployer).transfer(address(this).balance);
+    }
+
+    /* View / Pure functions */
+    function _baseURI() internal pure override returns (string memory) {
+        return "ipfs://QmeabjnV1H8ZhoztgTHAyQhNfJfQuo8yCvLimEaJfwFPo2/";
     }
 }

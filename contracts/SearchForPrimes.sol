@@ -6,6 +6,17 @@ import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
+// ERRORS FOUND WITH SLITHER:
+// - uint256 amountOfPrimes; => is a local variable never initialized
+// - uint256 amountOfPrimes = 0; => doesn't throw that error but in my mind,
+// both are the same since a variable is always initalized with it's null value
+// => bool = false, uint = 0 by default, so is there a difference between those 2?
+
+// - onTransferReceived missed null check to the address
+
+// - getAmountOfPrimes(address) has external calls inside a loop
+// since it's to my own contract it shouldn't be a problem right?
+
 /*
  * @title A basic NFT contract that can search ERC721Enumerable contracts for Primes
  * @author Patrick Zimmerer
@@ -59,6 +70,14 @@ contract SearchForPrimes is Ownable {
     }
 
     /*
+     * @title just returns the amount of tokens a user has
+     * @dev could be made internal aswell but optional
+     */
+    function balanceOfUser(address _owner) external view returns (uint256) {
+        return contractToSearch.balanceOf(_owner);
+    }
+
+    /*
      * @title determines if a number is a prime number
      * @dev uses the Math library from Openzeppelin
      */
@@ -72,13 +91,5 @@ contract SearchForPrimes is Ownable {
             }
         }
         return true;
-    }
-
-    /*
-     * @title just returns the amount of tokens a user has
-     * @dev could be made internal aswell but optional
-     */
-    function balanceOfUser(address _owner) external view returns (uint256) {
-        return contractToSearch.balanceOf(_owner);
     }
 }

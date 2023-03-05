@@ -10,18 +10,8 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
  * @dev implements ERC721
  */
 contract SomeContract is ERC721 {
-    /* State Variables */
-    uint256 public tokenSupply = 1;
-    uint256 public constant MAX_SUPPLY = 21;
-    uint256 public constant PRICE = 0.0001 ether;
-
-    /* Owner */
-    address private immutable deployer;
-
     constructor(
         string memory _name,
         string memory _symbol
-    ) ERC721(_name, _symbol) {
-        deployer = _msgSender();
-    }
+    ) ERC721(_name, _symbol) {}
 }
