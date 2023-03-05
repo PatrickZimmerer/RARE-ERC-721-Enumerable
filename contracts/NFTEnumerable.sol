@@ -13,7 +13,7 @@ contract NFTEnumerable is ERC721Enumerable {
     /* State Variables */
     uint256 public tokenSupply = 1;
     uint256 public constant MAX_SUPPLY = 21;
-    uint256 public constant PRICE = 0.000001 ether;
+    uint256 public constant PRICE = 0.0001 ether;
 
     /* Owner */
     address private immutable deployer;
@@ -50,6 +50,10 @@ contract NFTEnumerable is ERC721Enumerable {
     }
 
     function withdraw() external {
+        require(
+            msg.sender == deployer,
+            "Only the deployer is allowed to do that"
+        );
         payable(deployer).transfer(address(this).balance);
     }
 }
