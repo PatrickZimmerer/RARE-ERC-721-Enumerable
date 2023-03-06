@@ -14,10 +14,7 @@ describe('SearchForPrimes', () => {
 
 	const BIG_0 = BigNumber.from('0');
 	const BIG_1 = BigNumber.from('1');
-	const MAX_SUPPLY = 21;
 	const PRICE = ethers.utils.parseEther('0.0001');
-	const SMALL_AMOUNT_OF_ETH = ethers.utils.parseEther('0.00001');
-	const TINY_AMOUNT_OF_ETH = ethers.utils.parseEther('0.0000001');
 
 	beforeEach(async () => {
 		[deployer, account1] = await ethers.getSigners();
@@ -43,7 +40,7 @@ describe('SearchForPrimes', () => {
 			expect(await searchForPrimes.contractToSearch()).to.equal(nftEnumerable.address);
 		});
 		it('should not deploy since the contractToSearch is not ERC721Enumerable deployed', async () => {
-			const nonERC721EnumerableContract = await ethers.getContractFactory('SomeContract');
+			const nonERC721EnumerableContract = await ethers.getContractFactory('ERC721');
 			const nonERC721EnumerableContractInstance = await nonERC721EnumerableContract.deploy(
 				NAME,
 				SYMBOL
@@ -93,7 +90,7 @@ describe('SearchForPrimes', () => {
 			expect(await searchForPrimes.contractToSearch()).eq(ERC721EnumerableContractInstance.address);
 		});
 		it('should revert since the given address is not ERC721Enumerable', async () => {
-			const nonERC721EnumerableContract = await ethers.getContractFactory('SomeContract');
+			const nonERC721EnumerableContract = await ethers.getContractFactory('ERC721');
 			const nonERC721EnumerableContractInstance = await nonERC721EnumerableContract.deploy(
 				NAME,
 				SYMBOL
@@ -137,17 +134,6 @@ describe('SearchForPrimes', () => {
 			expectedBalance = await nftEnumerable.viewBalance();
 			expect(balance).eq(BIG_0);
 			expect(balance).eq(expectedBalance);
-		});
-	});
-	xdescribe('isPrimeNumber', () => {
-		it('should return the true because input is a prime number', async () => {
-			console.log(searchForPrimes);
-			const isPrime = await searchForPrimes.isPrimeNumber(BigNumber.from('3'));
-			expect(isPrime).to.be.true;
-		});
-		it('should return the false because input is not a prime number', async () => {
-			const isPrime = await searchForPrimes.isPrimeNumber(BigNumber.from('4'));
-			expect(isPrime).to.be.true;
 		});
 	});
 });

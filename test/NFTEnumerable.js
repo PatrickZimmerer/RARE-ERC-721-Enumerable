@@ -13,9 +13,7 @@ describe('NFTEnumerable', () => {
 
 	const BIG_0 = BigNumber.from('0');
 	const BIG_1 = BigNumber.from('1');
-	const MAX_SUPPLY = 21;
 	const PRICE = ethers.utils.parseEther('0.0001');
-	const SMALL_AMOUNT_OF_ETH = ethers.utils.parseEther('0.00001');
 	const TINY_AMOUNT_OF_ETH = ethers.utils.parseEther('0.0000001');
 	beforeEach(async () => {
 		[deployer, account1] = await ethers.getSigners();
