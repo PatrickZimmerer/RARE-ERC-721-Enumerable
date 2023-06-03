@@ -10,7 +10,7 @@
   => It sets up a proxy admin (if needed)
 
 - Question 2: What is a beacon proxy used for?
-- Answer: A beacon proxy is a vital component in the Ethereum upgrade, facilitating the transition from the current Ethereum network to the new version. It serves as an interface between the existing Ethereum network and the upgraded beacon chain. The beacon proxy ensures a smooth transfer of assets and information during the transition period, allowing smart contracts and decentralized applications to interact with the upgraded network. By providing compatibility and communication protocols, the beacon proxy enables seamless integration of the existing Ethereum network with the upgraded consensus mechanism.
+- Answer: A beacon proxy is a vital component when upgrading implementation contracts, it gets deployed by the factory on construction. When you pass in the address to the new logic for the implementation contract into the beacons `upgrade()` function you can update multiple implementation contracts at once, since they are all pointing to that beacon and if the beacon gets updated all other implementation contracts will be updated
 
 - Question 3: Why does the openzeppelin upgradeable tool insert something like `uint256[50] private __gap;` inside the contracts? To see it, create an upgradeable smart contract that has a parent contract and look in the parent.
 - Answer:
