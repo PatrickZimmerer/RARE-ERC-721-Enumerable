@@ -2,6 +2,12 @@
 
 - Question 1: The OZ upgrade tool for hardhat defends against 6 kinds of mistakes. What are they and why do they matter?
 - Answer:
+  => It warns you for unsafe code (code in constructor / state variables that are set on deployment for implementation contracts const & immutables are okay)
+  => It provides you an initializer modifier to initialize state variables safely and be only callable once
+  => It warns you if you try to deploy an upgrade of the implementation code with state variables in the wrong order (adding new state variables is ok)
+  => It warns you when you have a selfdestruct function in the implementatin contract
+  => It checks if there is an implementation contract deployed with the same bytecode, and deploy one if not
+  => It sets up a proxy admin (if needed)
 
 - Question 2: What is a beacon proxy used for?
 - Answer: A beacon proxy is a vital component in the Ethereum upgrade, facilitating the transition from the current Ethereum network to the new version. It serves as an interface between the existing Ethereum network and the upgraded beacon chain. The beacon proxy ensures a smooth transfer of assets and information during the transition period, allowing smart contracts and decentralized applications to interact with the upgraded network. By providing compatibility and communication protocols, the beacon proxy enables seamless integration of the existing Ethereum network with the upgraded consensus mechanism.
