@@ -1,19 +1,22 @@
 # Week 16 Answer these five questions
 
-- Question 1: The OZ upgrade tool for hardhat defends against 6 kinds of mistakes. What are they and why do they matter?
+## Question 1: The OZ upgrade tool for hardhat defends against 6 kinds of mistakes. What are they and why do they matter?
+
 - Answer:
 
-  1. It warns you for unsafe code (code in constructor / state variables that are set on deployment for implementation contracts const & immutables are okay)
-  2. It provides you an initializer modifier to initialize state variables safely and be only callable once
-  3. It warns you if you try to deploy an upgrade of the implementation code with state variables in the wrong order (adding new state variables is ok)
-  4. It warns you when you have a selfdestruct function in the implementatin contract
-  5. It checks if there is an implementation contract deployed with the same bytecode, and deploy one if not
-  6. It sets up a proxy admin (if needed)
+  - It warns you for unsafe code (code in constructor / state variables that are set on deployment for implementation contracts const & immutables are okay)
+  - It provides you an initializer modifier to initialize state variables safely and be only callable once
+  - It warns you if you try to deploy an upgrade of the implementation code with state variables in the wrong order (adding new state variables is ok)
+  - It warns you when you have a selfdestruct function in the implementatin contract
+  - It checks if there is an implementation contract deployed with the same bytecode, and deploy one if not
+  - It sets up a proxy admin (if needed)
 
-- Question 2: What is a beacon proxy used for?
+## Question 2: What is a beacon proxy used for?
+
 - Answer: A beacon proxy is a vital component when upgrading implementation contracts, it gets deployed by the factory on construction. When you pass in the address to the new logic for the implementation contract into the beacons `upgrade()` function you can update multiple implementation contracts at once, since they are all pointing to that beacon and if the beacon gets updated all other implementation contracts will be updated.
 
-- Question 3: Why does the openzeppelin upgradeable tool insert something like `uint256[50] private __gap;` inside the contracts? To see it, create an upgradeable smart contract that has a parent contract and look in the parent.
+## Question 3: Why does the openzeppelin upgradeable tool insert something like `uint256[50] private __gap;` inside the contracts? To see it, create an upgradeable smart contract that has a parent contract and look in the parent
+
 - Answer:
   It is used to avoid storage collisions between different versions of a contract, it "reserves" some storage slots for use in future upgrades.
 
@@ -21,11 +24,21 @@
 
   `uint256[50] private __gap;` will create a placeholder for 50 more variables in that might be added in the future
 
-- Question 4: What is the difference between initializing the proxy and initializing the implementation? Do you need to do both? When do they need to be done?
-- Answer:
+## Question 4: What is the difference between initializing the proxy and initializing the implementation? Do you need to do both? When do they need to be done?
 
-- Question 5: What is the use for the reinitializer?(<https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol#L119>) Provide a minimal example of proper use in Solidity
 - Answer:
+  The proxy contract is responsible for forwarding transactions to the implementation contract. When you deploy the proxy contract, you provide the address of the implementation contract as an argument. This "initializes" the proxy by telling it where to forward transactions.
+
+  The implementation contract contains the actual business logic of your upgradeable contract system. However, because this contract is never actually deployed (it's just used by the proxy), you can't use a constructor to initialize it. Instead, you need to use a separate initialize() function to set any initial state or perform any setup actions.
+
+  Yes you need both, the proxy needs to be initialized so it knows where to delegate calls. The implementation contract needs to be initialized so that its state is set up correctly. Both need to be done on deployment.
+
+## Question 5: What is the use for the [Duck Duck Go](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol#L119) ? Provide a minimal example of proper use in Solidity
+
+- Answer:
+  A reinitializer may be used after the original initialization step. This is essential to configure modules that are added through upgrades and that require initialization. It can only be called when the version also increases, the version can also be increased by more than just one version, setting the version to 255 will prevent any future updates since it is a `uint8` in the OZ implementation.
+
+  For example if you have an implementation contract V1, with storage variabels `uint256 firstValue` which needs to be set on deployment you will use the `initialize()` function to do that, now when you want to upgrade that contract and you also want another state variable that for some reason needs to be initialized, you can do that by adding the `reinitializer` modifiert to your `initialize()` function,
 
 ## Sample Hardhat Project
 
