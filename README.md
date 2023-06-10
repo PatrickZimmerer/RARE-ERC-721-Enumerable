@@ -15,7 +15,7 @@
 
 - Answer: A beacon proxy is a vital component when upgrading implementation contracts, it gets deployed by the factory on construction. When you pass in the address to the new logic for the implementation contract into the beacons `upgrade()` function you can update multiple implementation contracts at once, since they are all pointing to that beacon and if the beacon gets updated all other implementation contracts will be updated.
 
-## Question 3: Why does the openzeppelin upgradeable tool insert something like `uint256[50] private __gap;` inside the contracts? To see it, create an upgradeable smart contract that has a parent contract and look in the parent
+## Question 3: Why does the openzeppelin upgradeable tool insert something like `uint256[50] private __gap;` inside the contracts?
 
 - Answer:
   It is used to avoid storage collisions between different versions of a contract, it "reserves" some storage slots for use in future upgrades.
@@ -33,7 +33,7 @@
 
   Yes you need both, the proxy needs to be initialized so it knows where to delegate calls. The implementation contract needs to be initialized so that its state is set up correctly. Both need to be done on deployment.
 
-## Question 5: What is the use for the [reinitializer](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol#L119) ? Provide a minimal example of proper use in Solidity
+## Question 5: What is the use for the [reinitializer](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol#L119)? Provide a minimal example of proper use in Solidity
 
 - Answer:
   A reinitializer may be used after the original initialization step. This is essential to configure modules that are added through upgrades and that require initialization. It can only be called when the version also increases, the version can also be increased by more than just one version, setting the version to 255 will prevent any future updates since it is a `uint8` in the OZ implementation.
