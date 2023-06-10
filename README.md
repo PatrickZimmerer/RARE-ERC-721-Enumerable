@@ -33,7 +33,7 @@
 
   Yes you need both, the proxy needs to be initialized so it knows where to delegate calls. The implementation contract needs to be initialized so that its state is set up correctly. Both need to be done on deployment.
 
-## Question 5: What is the use for the [Duck Duck Go](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol#L119) ? Provide a minimal example of proper use in Solidity
+## Question 5: What is the use for the [reinitializer](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable/blob/master/contracts/proxy/utils/Initializable.sol#L119) ? Provide a minimal example of proper use in Solidity
 
 - Answer:
   A reinitializer may be used after the original initialization step. This is essential to configure modules that are added through upgrades and that require initialization. It can only be called when the version also increases, the version can also be increased by more than just one version, setting the version to 255 will prevent any future updates since it is a `uint8` in the OZ implementation.
