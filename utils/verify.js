@@ -3,11 +3,11 @@
 // and it would be a circular dependency
 const { run } = require('hardhat');
 
-const verify = async (contractAddress, args) => {
+const verify = async (contractAddress) => {
 	console.log('Verifying contract...');
 	try {
 		await run('verify:verify', {
-			address: 0xe5b78011b950db72f7f7cd8f8a2a7325b7755d03,
+			address: contractAddress,
 		});
 	} catch (e) {
 		if (e.message.toLowerCase().includes('already verified')) {
