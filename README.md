@@ -48,6 +48,10 @@
 
   For example if you have an implementation contract V1, with storage variabels `uint256 firstValue` which needs to be set on deployment you will use the `initialize()` function to do that, now when you want to upgrade that contract and you also want another state variable that for some reason needs to be initialized, you can do that by adding the `reinitializer` modifiert to your `initialize()` function,
 
+#### To verify a implementation contract
+
+- Run `npx hardhat verify --network goerli 0x4911194BFA9C4acA846F2368392eb586e712794B` or write another verify script and use that
+
 ## Sample Hardhat Project
 
 This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
