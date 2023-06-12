@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.18;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 /*
  * @title A basic NFT contract with Enumerable extension by openzeppelin
@@ -9,20 +11,26 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
  * @notice This contract is NOT FOR PRODUCTION, just for learning purposes
  * @dev implements ERC721
  */
-contract NFTEnumerable is ERC721Enumerable {
+contract NFTEnumerable is
+    Initializable,
+    ERC721EnumerableUpgradeable,
+    OwnableUpgradeable
+{
     /* State Variables */
-    uint256 public tokenSupply = 1;
+    uint256 public tokenSupply;
     uint256 public constant MAX_SUPPLY = 21;
     uint256 public constant PRICE = 0.0001 ether;
 
     /* Owner */
-    address private immutable deployer;
+    address private deployer;
 
-    constructor(
+    function initialize(
         string memory _name,
         string memory _symbol
-    ) ERC721(_name, _symbol) {
-        deployer = _msgSender();
+    ) public initializer {
+        __ERC721_init(_name, _symbol);
+        __Ownable_init();
+        tokenSupply = 1;
     }
 
     /*

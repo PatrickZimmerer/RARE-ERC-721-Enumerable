@@ -3,19 +3,16 @@ const { developmentChains } = require('../helper-hardhat-config');
 const { verify } = require('../utils/verify');
 
 module.exports = async function ({ getNamedAccounts, deployments }) {
-	const { deploy, log } = deployments;
-	const { deployer } = await getNamedAccounts();
+	const { log } = deployments;
 
 	const name = 'NFTEnumerable';
 	const symbol = 'NFE';
 
 	const arguments = [name, symbol];
 
-	const nftEnumerable = await deploy('NFTEnumerable', {
-		from: deployer,
-		args: arguments,
-		logs: true,
-		waitConfirmations: network.config.blockConfirmations || 1,
+	const NftEnumerable = await ethers.getContractFactory('NFTEnumerable');
+	const nftEnumerable = await upgrades.deployProxy(NftEnumerable, arguments, {
+		initializer: 'initialize',
 	});
 
 	// only verify the code when not on development chains as hardhat
